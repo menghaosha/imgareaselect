@@ -270,8 +270,8 @@ $.imgAreaSelect = function (img, options) {
         imgOfs = { left: round($img.offset().left), top: round($img.offset().top) };
         
         /* Get image dimensions */
-        imgWidth = $img.innerWidth();
-        imgHeight = $img.innerHeight();
+        imgWidth = $img.width();
+        imgHeight = $img.height();
         
         imgOfs.top += ($img.outerHeight() - imgHeight) >> 1;
         imgOfs.left += ($img.outerWidth() - imgWidth) >> 1;
