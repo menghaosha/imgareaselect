@@ -50,12 +50,14 @@ module.exports = function(grunt) {
         },
         src: ['src/**/*.js']
       },
+      /* there are still library files in test/
       test: {
         options: {
           jshintrc: 'test/.jshintrc'
         },
-        src: ['test/**/*.js']
+        src: ['test/**\/*.js']
       },
+      */
     },
     watch: {
       gruntfile: {
