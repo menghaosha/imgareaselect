@@ -362,10 +362,13 @@ $.imgAreaSelect = function (img, options) {
             $($handles[5]).css({ left: w, top: h >> 1 });
             $($handles[6]).css({ left: w >> 1, top: h });
             $($handles[7]).css({ top: h >> 1 });
+            $handles.slice(1,3).css({ left: w });
+            $handles.slice(2,4).css({ top: h });
             break;
         case 4:
             $handles.slice(1,3).css({ left: w });
             $handles.slice(2,4).css({ top: h });
+            break;
         }
 
         if (resetKeyPress !== false) {
