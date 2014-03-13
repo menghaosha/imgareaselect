@@ -15,7 +15,7 @@ test("Plugin initialization", function () {
                     jQuery.imgAreaSelect, 'Check if "instance: true" returns an instance of ' +
                     'jQuery.imgAreaSelect');
 
-            ok($('.imgareaselect-selection').length == 1,
+            ok($('.imgareaselect-selection').length === 1,
                 'Check if there is one element with the class ' +
                 '"imgareaselect-selection"');
 
@@ -136,10 +136,10 @@ test("Elements layout", function () {
 
             /* Handles */
             deepEqual(dim($('.imgareaselect-handle').eq(0)), { x1: imgDim.x1 + 10,
-                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 5, y2: imgDim.y1 + 20 + 5 },
+                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 5 + 2, y2: imgDim.y1 + 20 + 5 + 2 },
                 'Check if the top left handle div is positioned correctly');
             deepEqual(dim($('.imgareaselect-handle').eq(4)), { x1: imgDim.x1 + 10 + 6,
-                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 11, y2: imgDim.y1 + 20 + 5 },
+                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 11 + 2, y2: imgDim.y1 + 20 + 5 + 2 },
                 'Check if the top handle div is positioned correctly');
 
             /* Z-index */
@@ -196,25 +196,25 @@ test("Elements layout with a bordered image", function () {
                 'Check if the selection area div is positioned correctly');
 
             /* Selection border */
-            deepEqual(dim($('.imgareaselect-border1')), { x1: imgDim.x1 + 10,
+            deepEqual(dim($('.imgareaselect-border1'), -10), { x1: imgDim.x1 + 10,
                 y1: imgDim.y1 + 20, x2: imgDim.x1 + 30, y2: imgDim.y1 + 40 },
                 'Check if the first area border div is positioned correctly');
-            deepEqual(dim($('.imgareaselect-border2')), { x1: imgDim.x1 + 10,
+            deepEqual(dim($('.imgareaselect-border2'), -10), { x1: imgDim.x1 + 10,
                 y1: imgDim.y1 + 20, x2: imgDim.x1 + 30, y2: imgDim.y1 + 40 },
                 'Check if the second area border div is positioned correctly');
-            deepEqual(dim($('.imgareaselect-border3')), { x1: imgDim.x1 + 10,
+            deepEqual(dim($('.imgareaselect-border3'), -10), { x1: imgDim.x1 + 10,
                 y1: imgDim.y1 + 20, x2: imgDim.x1 + 30, y2: imgDim.y1 + 40 },
                 'Check if the third area border div is positioned correctly');
-            deepEqual(dim($('.imgareaselect-border4')), { x1: imgDim.x1 + 10,
+            deepEqual(dim($('.imgareaselect-border4'), -10), { x1: imgDim.x1 + 10,
                 y1: imgDim.y1 + 20, x2: imgDim.x1 + 30, y2: imgDim.y1 + 40 },
                 'Check if the fourth area border div is positioned correctly');
 
             /* Handles */
-            deepEqual(dim($('.imgareaselect-handle').eq(0)), { x1: imgDim.x1 + 10,
-                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 5, y2: imgDim.y1 + 20 + 5 },
+            deepEqual(dim($('.imgareaselect-handle').eq(0), -10), { x1: imgDim.x1 + 10,
+                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 5 + 2, y2: imgDim.y1 + 20 + 5 + 2 },
                 'Check if the top left handle div is positioned correctly');
-            deepEqual(dim($('.imgareaselect-handle').eq(4)), { x1: imgDim.x1 + 10 + 6,
-                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 11, y2: imgDim.y1 + 20 + 5 },
+            deepEqual(dim($('.imgareaselect-handle').eq(4), -10), { x1: imgDim.x1 + 10 + 6,
+                y1: imgDim.y1 + 20, x2: imgDim.x1 + 10 + 11 + 2, y2: imgDim.y1 + 20 + 5 + 2 },
                 'Check if the top handle div is positioned correctly');
 
             /* Cleanup */
@@ -233,10 +233,11 @@ test("Positioning", function () {
      */
     var msie = (/msie ([\w.]+)/i.exec(navigator.userAgent)||[])[1];
 
-    if (msie && msie < 7)
+    if (msie && msie < 7) {
         expect(7);
-    else
+    } else {
         expect(9);
+    }
 
     /* Initialization */
     $('#t').append('\
@@ -289,7 +290,7 @@ test("Positioning", function () {
     stop();
 
     $('#test-img-static').imgAreaSelect({
-        x1: 10, y1: 20, x2: 30, y2: 40,
+        x1: 10, y1: 20, x2: 29, y2: 39,
         show: true,
         classPrefix: 'ias',
         onInit: function (img, selection) {
@@ -312,7 +313,7 @@ test("Positioning", function () {
             parent: '#test-div-static',
             show: true,
             classPrefix: 'ias',
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             onInit: function (img, selection) {
                 var imgOfs = $('#test-img-static-parent').offset();
                 var selOfs = $('.ias-selection').offset();
@@ -333,7 +334,7 @@ test("Positioning", function () {
 
     var testImgRelative = function () {
         $('#test-img-relative').imgAreaSelect({
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             show: true,
             classPrefix: 'ias',
             onInit: function (img, selection) {
@@ -357,7 +358,7 @@ test("Positioning", function () {
             parent: '#test-div-relative',
             show: true,
             classPrefix: 'ias',
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             onInit: function (img, selection) {
                 var imgOfs = $('#test-img-relative-parent').offset();
                 var selOfs = $('.ias-selection').offset();
@@ -378,7 +379,7 @@ test("Positioning", function () {
 
     var testImgAbsolute = function () {
         $('#test-img-absolute').imgAreaSelect({
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             show: true,
             classPrefix: 'ias',
             onInit: function (img, selection) {
@@ -403,7 +404,7 @@ test("Positioning", function () {
             parent: '#test-div-absolute',
             show: true,
             classPrefix: 'ias',
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             onInit: function (img, selection) {
                 var imgOfs = $('#test-img-absolute-parent').offset();
                 var selOfs = $('.ias-selection').offset();
@@ -427,7 +428,7 @@ test("Positioning", function () {
 
     var testImgFixed = function () {
         $('#test-img-fixed').imgAreaSelect({
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             show: true,
             classPrefix: 'ias',
             onInit: function (img, selection) {
@@ -455,7 +456,7 @@ test("Positioning", function () {
             parent: '#test-div-fixed',
             show: true,
             classPrefix: 'ias',
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             onInit: function (img, selection) {
                 $(window).scrollLeft($(window).scrollLeft() + 100);
                 $(window).scrollTop($(window).scrollTop() + 100);
@@ -485,7 +486,7 @@ test("Positioning", function () {
             parent: '#test-div-scrolled',
             show: true,
             classPrefix: 'ias',
-            x1: 10, y1: 20, x2: 30, y2: 40,
+            x1: 10, y1: 20, x2: 29, y2: 39,
             onInit: function (img, selection) {
                 $('#test-div-scrolled').scrollTop($('#test-div-scrolled').scrollTop() + 20);
 
@@ -551,7 +552,7 @@ test("Plugin removal", function () {
     stop();
 
     $('#test-img').imgAreaSelect({
-        x1: 10, y1: 20, x2: 30, y2: 40,
+        x1: 10, y1: 20, x2: 29, y2: 39,
         onInit: function (img, selection) {
             ok($('#test-img').imgAreaSelect({ instance: true }) instanceof
                     jQuery.imgAreaSelect, 'Check if "instance: true" returns an instance of ' +
