@@ -10,7 +10,7 @@ test("Plugin initialization", function () {
 
     $('#test-img').imgAreaSelect({
         x1: 10, y1: 20, x2: 30, y2: 40,
-        onInit: function (img, selection) {
+        onInit: function () {
             ok($('#test-img').imgAreaSelect({ instance: true }) instanceof
                     jQuery.imgAreaSelect, 'Check if "instance: true" returns an instance of ' +
                     'jQuery.imgAreaSelect');
@@ -35,7 +35,7 @@ test("Mouse events", function () {
     stop();
 
     $('#test-img').imgAreaSelect({
-        onInit: function (img, selection) {
+        onInit: function () {
             var imgOfs = $('#test-img').offset();
             var event = $.Event('mousedown');
             event.which = 1;
@@ -87,33 +87,15 @@ test("Elements layout", function () {
 
     stop();
 
-    $('#test-img').imgAreaSelect({ x1: 10, y1: 20, x2: 30, y2: 40,
+    $('#test-img').imgAreaSelect({ x1: 10, y1: 20, x2: 29, y2: 39,
         handles: true,
-        onInit: function (img, selection) {
-            imgOfs = $('#test-img').offset();
-            imgWidth = $('#test-img').width();
-            imgHeight = $('#test-img').height();
-            imgDim = dim($('#test-img'));
+        onInit: function () {
+            var imgDim = dim($('#test-img'));
 
-            /* Left */
-            deepEqual(dim($('.imgareaselect-outer').eq(0)), { x1: imgDim.x1,
-                    y1: imgDim.y1, x2: imgDim.x1 + 10, y2: imgDim.y2 },
-                    'Check if the first outer div is positioned correctly');
-
-            /* Top */
-            deepEqual(dim($('.imgareaselect-outer').eq(1)), { x1: imgDim.x1 + 10,
-                y1: imgDim.y1, x2: imgDim.x1 + 30, y2: imgDim.y1 + 20 },
-                'Check if the second outer div is positioned correctly');
-
-            /* Right */
-            deepEqual(dim($('.imgareaselect-outer').eq(2)), { x1: imgDim.x1 + 30,
-                y1: imgDim.y1, x2: imgDim.x2, y2: imgDim.y2 },
-                'Check if the third outer div is positioned correctly');
-
-            /* Bottom */
-            deepEqual(dim($('.imgareaselect-outer').eq(3)), { x1: imgDim.x1 + 10,
-                y1: imgDim.y1 + 40, x2: imgDim.x1 + 30, y2: imgDim.y2 },
-                'Check if the fourth outer div is positioned correctly');
+            /* Outer area */
+            deepEqual(dim($('.imgareaselect-outer')), { x1: imgDim.x1,
+                    y1: imgDim.y1, x2: imgDim.x2, y2: imgDim.y2 },
+                    'Check if the outer area div is positioned correctly');
 
             /* Selection area */
             deepEqual(dim($('.imgareaselect-selection')), { x1: imgDim.x1 + 10,
@@ -162,36 +144,18 @@ test("Elements layout with a bordered image", function () {
 
     stop();
 
-    $('#test-img').imgAreaSelect({ x1: 10, y1: 20, x2: 30, y2: 40,
+    $('#test-img').imgAreaSelect({ x1: 10, y1: 20, x2: 29, y2: 39,
         handles: true,
-        onInit: function (img, selection) {
-            imgOfs = $('#test-img').offset();
-            imgWidth = $('#test-img').width();
-            imgHeight = $('#test-img').height();
-            imgDim = dim($('#test-img'), 10);
+        onInit: function () {
+            var imgDim = dim($('#test-img'));
 
-            /* Left */
-            deepEqual(dim($('.imgareaselect-outer').eq(0)), { x1: imgDim.x1,
-                    y1: imgDim.y1, x2: imgDim.x1 + 10, y2: imgDim.y2 },
-                    'Check if the first outer div is positioned correctly');
-
-            /* Top */
-            deepEqual(dim($('.imgareaselect-outer').eq(1)), { x1: imgDim.x1 + 10,
-                y1: imgDim.y1, x2: imgDim.x1 + 30, y2: imgDim.y1 + 20 },
-                'Check if the second outer div is positioned correctly');
-
-            /* Right */
-            deepEqual(dim($('.imgareaselect-outer').eq(2)), { x1: imgDim.x1 + 30,
-                y1: imgDim.y1, x2: imgDim.x2, y2: imgDim.y2 },
-                'Check if the third outer div is positioned correctly');
-
-            /* Bottom */
-            deepEqual(dim($('.imgareaselect-outer').eq(3)), { x1: imgDim.x1 + 10,
-                y1: imgDim.y1 + 40, x2: imgDim.x1 + 30, y2: imgDim.y2 },
-                'Check if the fourth outer div is positioned correctly');
+            /* Outer area */
+            deepEqual(dim($('.imgareaselect-outer')), { x1: imgDim.x1 + 10,
+                    y1: imgDim.y1 + 10, x2: imgDim.x2 - 10, y2: imgDim.y2 - 10 },
+                    'Check if the outer area div is positioned correctly');
 
             /* Selection area */
-            deepEqual(dim($('.imgareaselect-selection')), { x1: imgDim.x1 + 10,
+            deepEqual(dim($('.imgareaselect-selection'), -10), { x1: imgDim.x1 + 10,
                 y1: imgDim.y1 + 20, x2: imgDim.x1 + 30, y2: imgDim.y1 + 40 },
                 'Check if the selection area div is positioned correctly');
 
@@ -240,6 +204,7 @@ test("Positioning", function () {
     }
 
     /* Initialization */
+    /*jshint multistr: true*/
     $('#t').append('\
         <div id="test-force-scroll" style="position: absolute;\
          width: 2000px; height: 2000px;">\
@@ -293,7 +258,7 @@ test("Positioning", function () {
         x1: 10, y1: 20, x2: 29, y2: 39,
         show: true,
         classPrefix: 'ias',
-        onInit: function (img, selection) {
+        onInit: function () {
             var imgOfs = $('#test-img-static').offset();
             var selOfs = $('.ias-selection').offset();
 
@@ -314,7 +279,7 @@ test("Positioning", function () {
             show: true,
             classPrefix: 'ias',
             x1: 10, y1: 20, x2: 29, y2: 39,
-            onInit: function (img, selection) {
+            onInit: function () {
                 var imgOfs = $('#test-img-static-parent').offset();
                 var selOfs = $('.ias-selection').offset();
 
@@ -337,7 +302,7 @@ test("Positioning", function () {
             x1: 10, y1: 20, x2: 29, y2: 39,
             show: true,
             classPrefix: 'ias',
-            onInit: function (img, selection) {
+            onInit: function () {
                 var imgOfs = $('#test-img-relative').offset();
                 var selOfs = $('.ias-selection').offset();
 
@@ -359,7 +324,7 @@ test("Positioning", function () {
             show: true,
             classPrefix: 'ias',
             x1: 10, y1: 20, x2: 29, y2: 39,
-            onInit: function (img, selection) {
+            onInit: function () {
                 var imgOfs = $('#test-img-relative-parent').offset();
                 var selOfs = $('.ias-selection').offset();
 
@@ -382,7 +347,7 @@ test("Positioning", function () {
             x1: 10, y1: 20, x2: 29, y2: 39,
             show: true,
             classPrefix: 'ias',
-            onInit: function (img, selection) {
+            onInit: function () {
                 var imgOfs = $('#test-img-absolute').offset();
                 var selOfs = $('.ias-selection').offset();
 
@@ -405,7 +370,7 @@ test("Positioning", function () {
             show: true,
             classPrefix: 'ias',
             x1: 10, y1: 20, x2: 29, y2: 39,
-            onInit: function (img, selection) {
+            onInit: function () {
                 var imgOfs = $('#test-img-absolute-parent').offset();
                 var selOfs = $('.ias-selection').offset();
 
@@ -418,10 +383,11 @@ test("Positioning", function () {
                 /* Cleanup */
                 $('#test-img-absolute-parent').imgAreaSelect({ remove: true });
 
-                if (msie && msie < 7)
+                if (msie && msie < 7) {
                     testImgScrolledParent();
-                else
+                } else {
                     testImgFixed();
+                }
             }
         });
     };
@@ -431,7 +397,7 @@ test("Positioning", function () {
             x1: 10, y1: 20, x2: 29, y2: 39,
             show: true,
             classPrefix: 'ias',
-            onInit: function (img, selection) {
+            onInit: function () {
                 $(window).scrollLeft($(window).scrollLeft() + 100);
                 $(window).scrollTop($(window).scrollTop() + 100);
 
@@ -457,7 +423,7 @@ test("Positioning", function () {
             show: true,
             classPrefix: 'ias',
             x1: 10, y1: 20, x2: 29, y2: 39,
-            onInit: function (img, selection) {
+            onInit: function () {
                 $(window).scrollLeft($(window).scrollLeft() + 100);
                 $(window).scrollTop($(window).scrollTop() + 100);
 
@@ -487,7 +453,7 @@ test("Positioning", function () {
             show: true,
             classPrefix: 'ias',
             x1: 10, y1: 20, x2: 29, y2: 39,
-            onInit: function (img, selection) {
+            onInit: function () {
                 $('#test-div-scrolled').scrollTop($('#test-div-scrolled').scrollTop() + 20);
 
                 var imgOfs = $('#test-img-scrolled-parent').offset();
@@ -520,7 +486,7 @@ test("Window resize", function () {
     stop();
 
     $('#test-img').imgAreaSelect({
-        onInit: function (img, selection) {
+        onInit: function () {
             var exception;
 
             try {
@@ -530,11 +496,13 @@ test("Window resize", function () {
                 exception = e;
             }
 
-            if (exception)
+            if (exception) {
                 ok(false, exception);
-            else
+            }
+            else {
                 ok(true, 'Check if no exception is raised when the image is ' +
                         'hidden and window resize event occurs');
+            }
 
             /* Cleanup */
             $('#test-img').imgAreaSelect({ remove: true });
@@ -553,12 +521,12 @@ test("Plugin removal", function () {
 
     $('#test-img').imgAreaSelect({
         x1: 10, y1: 20, x2: 29, y2: 39,
-        onInit: function (img, selection) {
+        onInit: function () {
             ok($('#test-img').imgAreaSelect({ instance: true }) instanceof
                     jQuery.imgAreaSelect, 'Check if "instance: true" returns an instance of ' +
                     'jQuery.imgAreaSelect');
 
-            ok($('.imgareaselect-selection').length == 1,
+            ok($('.imgareaselect-selection').length === 1,
                 'Check if there is one element with the class ' +
                 '"imgareaselect-selection"');
 

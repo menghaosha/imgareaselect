@@ -13,7 +13,10 @@
   "browser": true,
   "predef": [
     "jQuery",
+    "$",
     "QUnit",
+    "testCleanup",
+    "dim",
     "module",
     "test",
     "asyncTest",
@@ -27,7 +30,6 @@
     "notDeepEqual",
     "strictEqual",
     "notStrictEqual",
-    "throws",
-    "Pollster"
+    "throws"
   ]
 }
